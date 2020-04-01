@@ -12,7 +12,58 @@ GAME RULES:
 var playerScores = [0,0]; //main scores of player 1 and 2
 var roundScore = 0;
 var currentPlayer = 0; // 0 is first player and 1 is second player
-var dice;
+//var dice;
 
-console.log(Math.round() * 6);
+//console.log(dice);
+//access to DOM is document object
+//we need elements from document object
+//document.querySelector('#current-' + currentPlayer).textContent = dice;
+//document.querySelector('#current-' + currentPlayer).innerHTML = '<em>' + dice + '</em>'
+// var x = document.querySelector('#score-0').textContent;
+// console.log(x);
+
+document.querySelector('.dice').style.display = 'none';
+
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+
+
+//here btn is called as call back function, so we are not adding () for btn
+document.querySelector('.btn-roll').addEventListener('click', function(){
+    
+    //1. random number
+    var dice = Math.floor(Math.random() * 6)+1 ;
+    
+    //2. display the result.
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    diceDOM.src = 'dice-' + dice + '.png';
+    
+    //3. update the round score only if the rolled number was not a 1.
+    if(dice !== 1){
+        //Add Score
+        roundScore += dice;
+        document.querySelector('#current-' + currentPlayer).textContent = roundScore;
+    }else{
+        //next player
+        currentPlayer === 0 ? currentPlayer = 1 : currentPlayer = 0;
+        roundScore = 0;
+
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+        // document.querySelector('.player-0-panel').classList.remove('active');
+        // document.querySelector('.player-1-panel').classList.add('active');
+
+        document.querySelector('.dice').style.display = 'none';
+
+
+    }
+});
+
+
+
 
